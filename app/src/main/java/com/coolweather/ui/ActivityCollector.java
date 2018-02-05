@@ -1,4 +1,4 @@
-package com.coolweather.activity;
+package com.coolweather.ui;
 
 import android.app.Activity;
 

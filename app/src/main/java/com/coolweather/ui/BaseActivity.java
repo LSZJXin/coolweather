@@ -1,4 +1,4 @@
-package com.coolweather.activity;
+package com.coolweather.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
