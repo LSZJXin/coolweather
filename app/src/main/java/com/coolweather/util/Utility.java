@@ -6,6 +6,7 @@ import android.util.Log;
 import com.coolweather.db.City;
 import com.coolweather.db.County;
 import com.coolweather.db.Province;
+import com.coolweather.gson.Weather;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -102,5 +103,23 @@ public class Utility {
             }
         }
         return false;
+    }
+
+    /**
+     * 将返回的JSON数据解析成Weather实体类
+     * @param response
+     * @return
+     */
+    public static Weather handleWeatherResponse(String response){
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
+            String weatherContent = jsonArray.getJSONObject(0).toString();
+            Weather weather = new Gson().fromJson(weatherContent,Weather.class);
+            return weather;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }
