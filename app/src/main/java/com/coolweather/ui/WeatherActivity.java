@@ -1,5 +1,6 @@
 package com.coolweather.ui;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -21,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.coolweather.R;
 import com.coolweather.gson.Forecast;
 import com.coolweather.gson.Weather;
+import com.coolweather.service.AutoUpdateService;
 import com.coolweather.util.HttpUtil;
 import com.coolweather.util.Utility;
 
@@ -50,7 +52,7 @@ public class WeatherActivity extends BaseActivity {
     public DrawerLayout drawerLayout;
     private Button navButton;
 
-    public String mWeatherId;
+    private String mWeatherId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +161,7 @@ public class WeatherActivity extends BaseActivity {
                                     .getDefaultSharedPreferences(WeatherActivity.this).edit();
                             editor.putString("weather",responseText);
                             editor.apply();
+                            mWeatherId = weather.basic.weatherId;
                             //展示天气信息
                             showWeatherInfo(weather);
                         }else {
@@ -236,5 +239,7 @@ public class WeatherActivity extends BaseActivity {
         carWashTV.setText(carWash);
         sportTV.setText(sport);
         weatherLayout.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 }
